@@ -1,0 +1,59 @@
+name: Build and Deploy to Azure App Service
+
+# Trigger workflow on push to main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Log in to Azure CLI
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # Build Docker image
+    - name: Build Docker image
+      run: docker build -t my-app:${{ github.sha }} .
+
+    # Log in to Azure Container Registry (ACR)
+    - name: Log in to ACR
+      run: echo ${{ secrets.ACR_PASSWORD }} | docker login MyACR.azurecr.io -u ${{ secrets.ACR_USERNAME }} --password-stdin
+
+    # Push Docker image to ACR
+    - name: Push Docker image to ACR
+      run: docker push MyACR.azurecr.io/my-app:${{ github.sha }}
+
+    # Infrastructure setup (first-time)
+    - name: Create Azure infrastructure
+      run: |
+        az group create --name MyResourceGroup --location westeurope
+        az acr create --resource-group MyResourceGroup --name MyACR --sku Basic
+        az appservice plan create --name MyAppServicePlan --resource-group MyResourceGroup --sku B1
+        az webapp create --resource-group MyResourceGroup --plan MyAppServicePlan --name MyApp --deployment-container-image-name MyACR.azurecr.io/my-app:${{ github.sha }}
+
+    # Deploy to Azure App Service
+    - name: Deploy to Azure App Service
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: MyApp
+        images: MyACR.azurecr.io/my-app:${{ github.sha }}
+az ad sp create-for-rbac --name myApp --role contributor --scopes /subscriptions/ed303178-6b93-47ba-a666-b5ff8724fba0 --sdk-auth
+
