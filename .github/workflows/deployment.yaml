@@ -49,7 +49,7 @@ jobs:
     - name: Create Azure infrastructure
       run: |
         az appservice plan create --name BMIAppService --resource-group bmi-service-app --sku B1 --location eastus2
-        az webapp create --resource-group bmi-service-app --plan BMIAppService --name BMIApplicationService --deployment-container-image-name bmiserviceacr.azurecr.io/bmi-app:${{ github.sha }} --runtime "DOCKER|bmiserviceacr.azurecr.io/bmi-app:${{ github.sha }}"
+        az webapp create --resource-group bmi-service-app --plan BMIAppService --name BMIApplicationService --runtime "DOCKER|bmiserviceacr.azurecr.io/bmi-app:${{ github.sha }}"
 
     # Deploy to Azure App Service
     - name: Deploy to Azure App Service
