@@ -51,7 +51,7 @@ jobs:
         az appservice plan create --name BMIAppService --resource-group bmi-service-app --sku B1 --location eastus2 --is-linux
         az webapp create --resource-group bmi-service-app --plan BMIAppService --name BMIApplicationService --runtime "DOCKER|bmiserviceacr.azurecr.io/bmi-app:${{ github.sha }}"
 
-    e# Deploy to Azure App Service
+    # Deploy to Azure App Service
     - name: Deploy to Azure App Service
       uses: azure/webapps-deploy@v2
       with:
