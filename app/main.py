@@ -19,3 +19,7 @@ def calculate_bmi(height_weight: str):
     height_in_meters = bmi_input.height / 100  # Convert height from cm to meters
     bmi = bmi_input.weight / (height_in_meters ** 2)
     return {"BMI": round(bmi, 2)}
+
+@app.get("/health")
+def health_check():
+    return {"status": "healthy"}
