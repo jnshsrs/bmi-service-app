@@ -55,5 +55,3 @@ jobs:
       with:
         app-name: MyApp
         images: MyACR.azurecr.io/my-app:${{ github.sha }}
-az ad sp create-for-rbac --name myApp --role contributor --scopes /subscriptions/ed303178-6b93-47ba-a666-b5ff8724fba0 --sdk-auth
-
