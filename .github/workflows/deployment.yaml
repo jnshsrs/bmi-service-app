@@ -39,7 +39,7 @@ jobs:
 
     # Tage Docker Image for ACR
     - name: Tag Docker image for ACR
-      run: docker tag my-app:${{ github.sha }} myacrname.azurecr.io/my-app:${{ github.sha }}
+      run: docker tag bmi-app:${{ github.sha }} myacrname.azurecr.io/bmi-app:${{ github.sha }}
 
     # Push Docker image to ACR
     - name: Push Docker image to ACR
