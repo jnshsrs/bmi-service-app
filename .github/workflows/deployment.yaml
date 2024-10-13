@@ -35,23 +35,23 @@ jobs:
 
     # Log in to Azure Container Registry (ACR)
     - name: Log in to ACR
-      run: echo ${{ secrets.ACR_PASSWORD }} | docker login MyACR.azurecr.io -u ${{ secrets.ACR_USERNAME }} --password-stdin
+      run: echo ${{ secrets.ACR_PASSWORD }} | docker login bmiserviceacr.azurecr.io -u ${{ secrets.ACR_USERNAME }} --password-stdin
 
     # Push Docker image to ACR
     - name: Push Docker image to ACR
-      run: docker push MyACR.azurecr.io/my-app:${{ github.sha }}
+      run: docker push bmiserviceacr.azurecr.io/my-app:${{ github.sha }}
 
     # Infrastructure setup (first-time)
     - name: Create Azure infrastructure
       run: |
         az group create --name MyResourceGroup --location westeurope
-        az acr create --resource-group MyResourceGroup --name MyACR --sku Basic
+        az acr create --resource-group MyResourceGroup --name bmiserviceacr --sku Basic
         az appservice plan create --name MyAppServicePlan --resource-group MyResourceGroup --sku B1
-        az webapp create --resource-group MyResourceGroup --plan MyAppServicePlan --name MyApp --deployment-container-image-name MyACR.azurecr.io/my-app:${{ github.sha }}
+        az webapp create --resource-group MyResourceGroup --plan MyAppServicePlan --name MyApp --deployment-container-image-name bmiserviceacr.azurecr.io/my-app:${{ github.sha }}
 
     # Deploy to Azure App Service
     - name: Deploy to Azure App Service
       uses: azure/webapps-deploy@v2
       with:
         app-name: MyApp
-        images: MyACR.azurecr.io/my-app:${{ github.sha }}
+        images: bmiserviceacr.azurecr.io/my-app:${{ github.sha }}
