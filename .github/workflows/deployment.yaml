@@ -51,16 +51,9 @@ jobs:
         az appservice plan create --name BMIAppService --resource-group bmi-service-app --sku B1 --location eastus2 --is-linux
         az webapp create --resource-group bmi-service-app --plan BMIAppService --name BMIApplicationService --runtime PYTHON:3.11
 
-    # Deploy to Azure App Service
-    - name: Deploy to Azure App Service
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: BMIApplicationService
-        images: bmiserviceacr.azurecr.io/bmi-app:${{ github.sha }}
-
     # Deploy to Azure App Servicee
     - name: Deploy to Azure App Service
       uses: azure/webapps-deploy@v2
       with:
-        app-name: BMIAppService 
+        app-name: BMIApplicationService 
         images: bmiserviceacr.azurecr.io/bmi-app:${{ github.sha }}
