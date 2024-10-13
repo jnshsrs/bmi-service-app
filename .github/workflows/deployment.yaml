@@ -48,9 +48,9 @@ jobs:
     # Infrastructure setup (first-time)
     - name: Create Azure infrastructure
       run: |
-        az appservice plan create --name BMIAppService --resource-group bmi-service-app --sku S1
+        az appservice plan create --name BMIAppService --resource-group bmi-service-app --sku B1 --location eastus
         az webapp create --resource-group bmi-service-app --plan MyAppServicePlan --name BMIApplicationService --deployment-container-image-name bmiserviceacr.azurecr.io/bmi-app:${{ github.sha }}
-
+        
     # Deploy to Azure App Service
     - name: Deploy to Azure App Service
       uses: azure/webapps-deploy@v2
