@@ -1,19 +1,21 @@
 from fastapi import FastAPI, HTTPException
-from app.models import BMIInput
+from app.models import HeightWeight
 from fastapi import Body
 
 app = FastAPI()
-
 
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the BMI calculator!"}
 
 @app.post("/bmi")
-def calculate_bmi(bmi_input: BMIInput = Body(...)):
+def calculate_bmi(bmi_input: HeightWeight = Body(...)):
+    """
+    Calculate the Body Mass Index (BMI) based on the provided height and weight.
+    """
     try:
         # Validate the input using Pydantic model
-        bmi_input = BMIInput(height=bmi_input.height, weight=bmi_input.weight)
+        bmi_input = HeightWeight(height=bmi_input.height, weight=bmi_input.weight)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -24,4 +26,7 @@ def calculate_bmi(bmi_input: BMIInput = Body(...)):
 
 @app.get("/health")
 def health_check():
+    """
+    Health check endpoint to verify the service status.
+    """
     return {"status": "healthy"}
