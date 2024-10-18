@@ -28,3 +28,7 @@ def calculate_bmi(height_weight: str):
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
+
+@app.post("/bmi")
+def bmi_info(bmi_input: BMIInput):
+    return {"Info": "Use BMI calculator by sending a GET request to /bmi/{height}-{weight} endpoint."}
