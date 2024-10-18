@@ -73,4 +73,4 @@ jobs:
         app-name: 'BMIApplicationService'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_f5f2bc4285b04855918dcfdd0197c297 }}
-        images: 'bmiserviceacr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_f0898847d2fe4a75883cde91f20d5414 }}/bmi-app:latest'
+        images: 'bmiserviceacr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_f0898847d2fe4a75883cde91f20d5414 }}/bmiserviceacr/bmi-app:latest'
