@@ -1,3 +1,4 @@
+[![Build and deploy container app to Azure Web App - BMIApplicationService](https://github.com/jnshsrs/bmi-service-app/actions/workflows/main_BMIApplicationService.yml/badge.svg?branch=main)](https://github.com/jnshsrs/bmi-service-app/actions/workflows/main_BMIApplicationService.yml) 
 # BMI API Service
 
 This project provides a simple REST API to calculate the Body Mass Index (BMI) using **FastAPI**. The BMI is calculated based on the user's height and weight provided via a URL.
