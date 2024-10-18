@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from app.models import BMIInput
+from fastapi import Body
 
 app = FastAPI()
 
@@ -8,15 +9,11 @@ app = FastAPI()
 def read_root():
     return {"message": "Welcome to the BMI calculator!"}
 
-@app.get("/bmi/{height_weight}")
-def calculate_bmi(height_weight: str):
+@app.post("/bmi")
+def calculate_bmi(bmi_input: BMIInput = Body(...)):
     try:
-        # Split the height and weight from the URL string (formatted as height-weight)
-        height, weight = map(float, height_weight.split("-"))
-        # Use Pydantic model for validation
-        bmi_input = BMIInput(height=height, weight=weight)
-    except ValueError:
-        raise HTTPException(status_code=400, detail="Invalid input format. Use height-weight as float values.")
+        # Validate the input using Pydantic model
+        bmi_input = BMIInput(height=bmi_input.height, weight=bmi_input.weight)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
