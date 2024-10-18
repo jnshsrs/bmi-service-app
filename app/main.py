@@ -3,6 +3,11 @@ from app.models import BMIInput
 
 app = FastAPI()
 
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the BMI calculator!"}
+
 @app.get("/bmi/{height_weight}")
 def calculate_bmi(height_weight: str):
     try:
