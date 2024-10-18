@@ -12,7 +12,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Install curl for health check
-RUN apt-get update && apt-get install -y curl
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates curl gnupg \
+    && curl -fsSL https://deb.debian.org/debian-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/debian-archive-keyring.gpg \
+    && apt-get update \
+    && apt-get install -y curl
 
 # Expose the port FastAPI will run on
 EXPOSE 8000
