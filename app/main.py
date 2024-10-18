@@ -32,8 +32,3 @@ def health_check():
 @app.get("/bmi")
 def bmi_info():
     return {"Info": "Use BMI calculator by sending a GET request to /bmi/{height}-{weight} endpoint."}
-
-@app.get("/docs")
-def bmi_docs():
-    return {"Docs": "https://sciphy-stats.de", 
-            "Info": "Use BMI calculator by sending a GET request to /bmi/{height}-{weight} endpoint."}
