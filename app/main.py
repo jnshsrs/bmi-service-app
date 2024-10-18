@@ -30,5 +30,5 @@ def health_check():
     return {"status": "healthy"}
 
 @app.get("/bmi")
-def bmi_info(bmi_input: BMIInput):
+def bmi_info():
     return {"Info": "Use BMI calculator by sending a GET request to /bmi/{height}-{weight} endpoint."}
