@@ -8,6 +8,10 @@ app = FastAPI()
 def read_root():
     return {"message": "Welcome to the BMI calculator!"}
 
+@app.get("/version")
+def read_version():
+    return {"version": "0.1.0"}
+
 @app.post("/bmi")
 def calculate_bmi(bmi_input: HeightWeight = Body(...)):
     """
