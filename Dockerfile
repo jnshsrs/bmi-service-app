@@ -1,28 +1,21 @@
-# Use the official Python image
-FROM python:3.11-slim
+# Use Python slim image as base
+FROM python:3.11-bullseye
 
-# Set working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy requirements and install them
+RUN apt-get update
+RUN apt-get install -y curl
+
+# Copy requirements.txt and install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the app code
+# Copy the application code
 COPY . .
-
-# Install curl for health check
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates curl gnupg \
-    && curl -fsSL https://deb.debian.org/debian-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/debian-archive-keyring.gpg \
-    && apt-get update \
-    && apt-get install -y curl
 
 # Expose the port FastAPI will run on
 EXPOSE 8000
 
-# Health check to ping the /health endpoint
-HEALTHCHECK CMD curl --fail --output /dev/null --silent http://localhost:8000/health
-
-# Command to run the FastAPI app
+# Run the FastAPI app using uvicorn
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
