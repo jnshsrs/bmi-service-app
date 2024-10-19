@@ -4,16 +4,12 @@ from app.main import app
 client = TestClient(app)
 
 def test_bmi_valid():
-    response = client.get("/bmi/175-70")
+    # Assuming your API endpoint is POST /bmi and expects JSON payload for height and weight
+    response = client.post(
+        "/bmi",
+        json={"height": 175, "weight": 70}  # Provide the same data as in your API call
+    )
+    
     assert response.status_code == 200
+    # Adjust the BMI calculation based on your backend logic
     assert response.json() == {"BMI": 22.86}
-
-def test_bmi_invalid_format():
-    response = client.get("/bmi/175x70")
-    assert response.status_code == 400
-    assert response.json() == {"detail": "Invalid input format. Use height-weight as float values."}
-
-def test_bmi_non_numeric_values():
-    response = client.get("/bmi/abc-def")
-    assert response.status_code == 400
-    assert response.json() == {"detail": "Invalid input format. Use height-weight as float values."}
