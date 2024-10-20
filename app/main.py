@@ -10,7 +10,7 @@ def read_root():
 
 @app.get("/version")
 def read_version():
-    return {"version": "0.1.0"}
+    return {"version": "0.2.0"}
 
 @app.post("/bmi")
 def calculate_bmi(bmi_input: HeightWeight = Body(...)):
