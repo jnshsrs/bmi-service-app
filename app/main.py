@@ -12,7 +12,7 @@ def read_root():
 def read_version():
     return {"version": "0.2.1"}
 
-@app.post("/bmi")
+@app.post("/calculate")
 def calculate_bmi(bmi_input: HeightWeight = Body(...)):
     """
     Calculate the Body Mass Index (BMI) based on the provided height and weight.
