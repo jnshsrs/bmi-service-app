@@ -33,4 +33,4 @@ def health_check():
     """
     Health check endpoint to verify the service status.
     """
-    return {"status": "healthy"}
+    return {"status": "healthy", "message": "Service is running", "changed": "23.10.2024"}

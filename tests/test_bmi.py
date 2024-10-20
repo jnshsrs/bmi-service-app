@@ -13,3 +13,8 @@ def test_bmi_valid():
     assert response.status_code == 200
     # Adjust the BMI calculation based on your backend logic
     assert response.json() == {"BMI": 22.86}
+
+def test_version():
+    # Assuming your API endpoint is POST /bmi and expects JSON payload for height and weight
+    response = client.get("/version")
+    assert response.status_code == 200
